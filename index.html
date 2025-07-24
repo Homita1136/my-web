@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy New Year</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to top right, #000000, #1a1a1a);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-top: 30px;
+      color: #ffcc00;
+      text-shadow: 2px 2px 10px #ffcc00;
+    }
+
+    #greeting {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-top: 10px;
+      color: #ffffff;
+    }
+
+    #countdown {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-top: 20px;
+    }
+
+    .firework, .lantern {
+      position: absolute;
+      background: transparent;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .firework {
+      width: 10px;
+      height: 10px;
+      animation: explode 1s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% {
+        transform: scale(0.1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    .lantern {
+      width: 20px;
+      height: 30px;
+      background: rgba(255, 200, 0, 0.7);
+      border-radius: 50% 50% 40% 40%;
+      animation: floatLantern 10s linear infinite;
+    }
+
+    @keyframes floatLantern {
+      0% {
+        transform: translateY(0);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    /* 🔻 Mobile Responsive Styles */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      #greeting,
+      #countdown {
+        font-size: 1rem;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Happy New Year 2025! 🎉</h1>
+  <div id="greeting">Wishing you joy, peace, and success in the coming year!</div>
+  <div id="countdown"></div>
+
+  <script>
+    function createFirework() {
+      const firework = document.createElement("div");
+      firework.classList.add("firework");
+      firework.style.left = Math.random() * window.innerWidth + "px";
+      firework.style.top = Math.random() * window.innerHeight + "px";
+      firework.style.backgroundColor = getRandomColor();
+      document.body.appendChild(firework);
+      setTimeout(() => firework.remove(), 1000);
+    }
+
+    function getRandomColor() {
+      const colors = ["#ff4d4d", "#ffff66", "#66ff66", "#66b3ff", "#ff66cc"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    setInterval(createFirework, 300);
+
+    function createLantern() {
+      const lantern = document.createElement("div");
+      lantern.classList.add("lantern");
+      lantern.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(lantern);
+      setTimeout(() => lantern.remove(), 10000);
+    }
+
+    setInterval(createLantern, 1000);
+
+    // Countdown Logic
+    const countdown = document.getElementById("countdown");
+    const newYear = new Date("Jan 1, 2025 00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = newYear - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s until 2025!`;
+
+      if (distance < 0) {
+        countdown.innerHTML = "🎆 It's 2025! 🎆";
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
